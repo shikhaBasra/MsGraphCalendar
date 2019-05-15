@@ -33,7 +33,11 @@ library.add(faUserCircle);
     NgbModule,
     FontAwesomeModule,
     MsalModule.forRoot({
-      clientID: OAuthSettings.appId
+      cacheLocation: 'localStorage',
+      consentScopes: ['openid'],
+      clientID: OAuthSettings.appId,
+      redirectUri: 'http://localhost:4200/calendar',
+      postLogoutRedirectUri: 'http://localhost:4200/'
     })
   ],
   providers: [],
