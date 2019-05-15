@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { MsalService } from '@azure/msal-angular';
 import { Client } from '@microsoft/microsoft-graph-client';
 
-import { AlertsService } from './alerts.service';
-import { OAuthSettings } from '../oauth';
-import { User } from './user';
+import { AlertsService } from '../alerts/shared/alerts.service';
+import { OAuthSettings } from '../../oauth';
+import { User } from './models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class AuthService {
     private alertsService: AlertsService) {
 
     this.authenticated = this.msalService.getUser() != null;
-    this.getUser().then((user) => {this.user = user});
+    this.getUser().then((user) => { this.user = user; });
   }
 
   // Prompt the user to sign in and
@@ -59,14 +59,13 @@ export class AuthService {
       // Initialize the Graph client with an auth
       // provider that requests the token from the
       // auth service
-      authProvider: async(done) => {
+      authProvider: async (done) => {
         let token = await this.getAccessToken()
           .catch((reason) => {
             done(reason, null);
           })
 
-        if (token)
-        {
+        if (token) {
           done(null, token);
         } else {
           done("Could not get an access token", null);

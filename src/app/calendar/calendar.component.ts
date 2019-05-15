@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment-timezone';
 
-import { GraphService } from '../graph.service';
-import { Event, DateTimeTimeZone } from '../event';
-import { AlertsService } from '../alerts.service';
+import { GraphService } from '../services/graph.service';
+import { Event, DateTimeTimeZone } from '../services/models/event';
+import { AlertsService } from '../alerts/shared/alerts.service';
 
 @Component({
   selector: 'app-calendar',
@@ -28,8 +28,7 @@ export class CalendarComponent implements OnInit {
   formatDateTimeTimeZone(dateTime: DateTimeTimeZone): string {
     try {
       return moment.tz(dateTime.dateTime, dateTime.timeZone).format();
-    }
-    catch(error) {
+    } catch(error) {
       this.alertsService.add('DateTimeTimeZone conversion error', JSON.stringify(error));
     }
   }

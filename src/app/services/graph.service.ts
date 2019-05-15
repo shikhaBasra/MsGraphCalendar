@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Client } from '@microsoft/microsoft-graph-client';
 
 import { AuthService } from './auth.service';
-import { Event } from './event';
-import { AlertsService } from './alerts.service';
+import { Event } from './models/event';
+import { AlertsService } from '../alerts/shared/alerts.service';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +40,7 @@ export class GraphService {
         .api('/me/events')
         .select('subject,organizer,start,end')
         .orderby('createdDateTime DESC')
+        .top(200)
         .get();
 
       return result.value;
